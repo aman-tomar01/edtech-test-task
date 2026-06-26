@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: edtech-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: edtech
+      POSTGRES_PASSWORD: edtech_secret
+      POSTGRES_DB: edtech_docs
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./prisma/rls.sql:/docker-entrypoint-initdb.d/99-rls.sql:ro
+
+volumes:
+  postgres_data:
